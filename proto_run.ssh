@@ -1,1 +1,2 @@
-protoc --go_out=./gen $first.proto
+## protoc --go_out=./gen first.proto
+protoc first.proto  --go_out=plugins=grpc:gen first.proto

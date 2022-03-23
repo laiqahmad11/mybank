@@ -7,7 +7,11 @@
 package tutorialpb
 
 import (
+	context "context"
 	proto "github.com/golang/protobuf/proto"
+	grpc "google.golang.org/grpc"
+	codes "google.golang.org/grpc/codes"
+	status "google.golang.org/grpc/status"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -97,6 +101,100 @@ func (x *Person) GetBirthTimestamp() *timestamppb.Timestamp {
 	return nil
 }
 
+type PersonRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+}
+
+func (x *PersonRequest) Reset() {
+	*x = PersonRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_first_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *PersonRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PersonRequest) ProtoMessage() {}
+
+func (x *PersonRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_first_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PersonRequest.ProtoReflect.Descriptor instead.
+func (*PersonRequest) Descriptor() ([]byte, []int) {
+	return file_first_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *PersonRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+type PersonResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Person *Person `protobuf:"bytes,1,opt,name=person,proto3" json:"person,omitempty"`
+}
+
+func (x *PersonResponse) Reset() {
+	*x = PersonResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_first_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *PersonResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PersonResponse) ProtoMessage() {}
+
+func (x *PersonResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_first_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PersonResponse.ProtoReflect.Descriptor instead.
+func (*PersonResponse) Descriptor() ([]byte, []int) {
+	return file_first_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *PersonResponse) GetPerson() *Person {
+	if x != nil {
+		return x.Person
+	}
+	return nil
+}
+
 var File_first_proto protoreflect.FileDescriptor
 
 var file_first_proto_rawDesc = []byte{
@@ -113,10 +211,20 @@ var file_first_proto_rawDesc = []byte{
 	0x18, 0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e,
 	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61,
 	0x6d, 0x70, 0x52, 0x0e, 0x62, 0x69, 0x72, 0x74, 0x68, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61,
-	0x6d, 0x70, 0x42, 0x28, 0x5a, 0x26, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63, 0x6f, 0x6c, 0x62, 0x75,
-	0x66, 0x66, 0x65, 0x72, 0x73, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2f, 0x67,
-	0x6f, 0x2f, 0x74, 0x75, 0x74, 0x6f, 0x72, 0x69, 0x61, 0x6c, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72,
-	0x6f, 0x74, 0x6f, 0x33,
+	0x6d, 0x70, 0x22, 0x23, 0x0a, 0x0d, 0x50, 0x65, 0x72, 0x73, 0x6f, 0x6e, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x22, 0x38, 0x0a, 0x0e, 0x50, 0x65, 0x72, 0x73, 0x6f,
+	0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x26, 0x0a, 0x06, 0x70, 0x65, 0x72,
+	0x73, 0x6f, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0e, 0x2e, 0x6d, 0x79, 0x62, 0x61,
+	0x6e, 0x6b, 0x2e, 0x50, 0x65, 0x72, 0x73, 0x6f, 0x6e, 0x52, 0x06, 0x70, 0x65, 0x72, 0x73, 0x6f,
+	0x6e, 0x32, 0x4b, 0x0a, 0x0d, 0x50, 0x65, 0x72, 0x73, 0x6f, 0x6e, 0x53, 0x65, 0x72, 0x76, 0x69,
+	0x63, 0x65, 0x12, 0x3a, 0x0a, 0x09, 0x47, 0x65, 0x74, 0x50, 0x65, 0x72, 0x73, 0x6f, 0x6e, 0x12,
+	0x15, 0x2e, 0x6d, 0x79, 0x62, 0x61, 0x6e, 0x6b, 0x2e, 0x50, 0x65, 0x72, 0x73, 0x6f, 0x6e, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e, 0x6d, 0x79, 0x62, 0x61, 0x6e, 0x6b, 0x2e,
+	0x50, 0x65, 0x72, 0x73, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0x28,
+	0x5a, 0x26, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63, 0x6f, 0x6c, 0x62, 0x75, 0x66, 0x66, 0x65, 0x72,
+	0x73, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2f, 0x67, 0x6f, 0x2f, 0x74, 0x75,
+	0x74, 0x6f, 0x72, 0x69, 0x61, 0x6c, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -131,18 +239,23 @@ func file_first_proto_rawDescGZIP() []byte {
 	return file_first_proto_rawDescData
 }
 
-var file_first_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_first_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_first_proto_goTypes = []interface{}{
 	(*Person)(nil),                // 0: mybank.Person
-	(*timestamppb.Timestamp)(nil), // 1: google.protobuf.Timestamp
+	(*PersonRequest)(nil),         // 1: mybank.PersonRequest
+	(*PersonResponse)(nil),        // 2: mybank.PersonResponse
+	(*timestamppb.Timestamp)(nil), // 3: google.protobuf.Timestamp
 }
 var file_first_proto_depIdxs = []int32{
-	1, // 0: mybank.Person.birth_timestamp:type_name -> google.protobuf.Timestamp
-	1, // [1:1] is the sub-list for method output_type
-	1, // [1:1] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	3, // 0: mybank.Person.birth_timestamp:type_name -> google.protobuf.Timestamp
+	0, // 1: mybank.PersonResponse.person:type_name -> mybank.Person
+	1, // 2: mybank.PersonService.GetPerson:input_type -> mybank.PersonRequest
+	2, // 3: mybank.PersonService.GetPerson:output_type -> mybank.PersonResponse
+	3, // [3:4] is the sub-list for method output_type
+	2, // [2:3] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_first_proto_init() }
@@ -163,6 +276,30 @@ func file_first_proto_init() {
 				return nil
 			}
 		}
+		file_first_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*PersonRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_first_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*PersonResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -170,9 +307,9 @@ func file_first_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_first_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   1,
+			NumMessages:   3,
 			NumExtensions: 0,
-			NumServices:   0,
+			NumServices:   1,
 		},
 		GoTypes:           file_first_proto_goTypes,
 		DependencyIndexes: file_first_proto_depIdxs,
@@ -182,4 +319,84 @@ func file_first_proto_init() {
 	file_first_proto_rawDesc = nil
 	file_first_proto_goTypes = nil
 	file_first_proto_depIdxs = nil
+}
+
+// Reference imports to suppress errors if they are not otherwise used.
+var _ context.Context
+var _ grpc.ClientConnInterface
+
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the grpc package it is being compiled against.
+const _ = grpc.SupportPackageIsVersion6
+
+// PersonServiceClient is the client API for PersonService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type PersonServiceClient interface {
+	GetPerson(ctx context.Context, in *PersonRequest, opts ...grpc.CallOption) (*PersonResponse, error)
+}
+
+type personServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewPersonServiceClient(cc grpc.ClientConnInterface) PersonServiceClient {
+	return &personServiceClient{cc}
+}
+
+func (c *personServiceClient) GetPerson(ctx context.Context, in *PersonRequest, opts ...grpc.CallOption) (*PersonResponse, error) {
+	out := new(PersonResponse)
+	err := c.cc.Invoke(ctx, "/mybank.PersonService/GetPerson", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// PersonServiceServer is the server API for PersonService service.
+type PersonServiceServer interface {
+	GetPerson(context.Context, *PersonRequest) (*PersonResponse, error)
+}
+
+// UnimplementedPersonServiceServer can be embedded to have forward compatible implementations.
+type UnimplementedPersonServiceServer struct {
+}
+
+func (*UnimplementedPersonServiceServer) GetPerson(context.Context, *PersonRequest) (*PersonResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPerson not implemented")
+}
+
+func RegisterPersonServiceServer(s *grpc.Server, srv PersonServiceServer) {
+	s.RegisterService(&_PersonService_serviceDesc, srv)
+}
+
+func _PersonService_GetPerson_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PersonRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PersonServiceServer).GetPerson(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/mybank.PersonService/GetPerson",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PersonServiceServer).GetPerson(ctx, req.(*PersonRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _PersonService_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "mybank.PersonService",
+	HandlerType: (*PersonServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetPerson",
+			Handler:    _PersonService_GetPerson_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "first.proto",
 }

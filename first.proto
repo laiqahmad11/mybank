@@ -12,4 +12,15 @@ message Person {
     google.protobuf.Timestamp birth_timestamp = 4;
 }
 
+message PersonRequest {
+    string name=1;
+}
+
+message PersonResponse {
+    Person person = 1;
+}
+
+service PersonService {
+    rpc GetPerson(PersonRequest) returns(PersonResponse);
+}
 
